@@ -1,0 +1,13 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "Run tests when the core changes",
+      "description": "Any edit to skeleton/ or a profile runs the full test suite, so the seatbelt can never silently break.",
+      "trigger": "PostFileSave",
+      "matcher": "(skeleton|reply-reader|kid-message)[\\\\/].*\\.mjs$",
+      "action": { "type": "command", "command": "node --test" },
+      "timeout": 120
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "name": "bezen-skeleton",
+  "version": "0.1.0",
+  "description": "A skeleton for agents that read what a person is protecting behind their words. Two apps, one core.",
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "test": "node --test"
+  },
+  "devDependencies": {
+    "fast-check": "^3.23.2"
+  }
+}

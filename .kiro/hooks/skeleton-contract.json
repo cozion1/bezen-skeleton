@@ -1,0 +1,12 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "Keep apps thin",
+      "description": "When an app folder changes, check the skeleton contract in code (no credits): an app folder may hold only profile.mjs, examples.mjs and index.html. A failure is sent back to the agent so it moves the logic into skeleton/.",
+      "trigger": "PostFileSave",
+      "matcher": "(reply-reader|kid-message)[\\\\/]",
+      "action": { "type": "command", "command": "node scripts/check-contract.mjs" }
+    }
+  ]
+}
