@@ -44,7 +44,7 @@ Every reading quotes the sender's exact words, and code verifies the quote.
 1. WHEN `quote` appears in the text THEN `verified` SHALL be `true`.
 2. Matching SHALL ignore differences in whitespace, letter case, straight vs curly quotes and apostrophes, and Unicode normalization (NFC) — and nothing else.
 3. WHEN `quote` is empty or does not appear THEN `verified` SHALL be `false` and the reading SHALL keep the model's other fields but the UI SHALL label it "Unverified reading — the quote was not found in the message".
-4. For every text T and every substring S of T, `verify(S, T)` SHALL be `true` (property-based test).
+4. For every text T and every substring S of T that contains at least one non-whitespace character, `verify(S, T)` SHALL be `true` (property-based test). A quote that is empty after normalization is not evidence of anything and SHALL NOT verify (4.3 wins). *Found by property-based testing: the generator produced T = " ", S = " ", which the first wording of this criterion said must verify and 4.3 said must not.*
 5. For every text T and every string S that is not a substring of T after normalization, `verify(S, T)` SHALL be `false` (property-based test).
 6. `verify` SHALL be a pure function with no I/O.
 

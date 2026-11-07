@@ -1,0 +1,301 @@
+/*
+ * skeleton/ui/reader.css
+ *
+ * Mobile-first layout: works at 360px wide.
+ * Light mode default + @media (prefers-color-scheme: dark) dark mode.
+ *
+ * Covers: Req 9.1, 9.2
+ */
+
+/* ── CSS Custom Properties ─────────────────────────────────────────────────── */
+
+:root {
+  --color-bg:           #ffffff;
+  --color-surface:      #f5f5f5;
+  --color-border:       #d0d0d0;
+  --color-text:         #1a1a1a;
+  --color-text-muted:   #555555;
+  --color-primary:      #1a6fbf;
+  --color-primary-text: #ffffff;
+  --color-safety-bg:    #fff3cd;
+  --color-safety-text:  #7a4a00;
+  --color-safety-border:#e0a000;
+  --color-verified:     #1a7a40;
+  --color-unverified:   #b94a10;
+  --color-error:        #b94a10;
+  --radius:             8px;
+  --gap:                1rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg:           #121212;
+    --color-surface:      #1e1e1e;
+    --color-border:       #3a3a3a;
+    --color-text:         #e8e8e8;
+    --color-text-muted:   #aaaaaa;
+    --color-primary:      #5ba4e5;
+    --color-primary-text: #0a0a0a;
+    --color-safety-bg:    #3a2a00;
+    --color-safety-text:  #ffd166;
+    --color-safety-border:#a07000;
+    --color-verified:     #4caf81;
+    --color-unverified:   #f08060;
+    --color-error:        #f08060;
+  }
+}
+
+/* ── Base reset & layout ───────────────────────────────────────────────────── */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  padding: 1rem;
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+/* ── Page heading ──────────────────────────────────────────────────────────── */
+
+.reader-header {
+  margin-bottom: 1.5rem;
+}
+
+.reader-header h1 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.reader-header p {
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+}
+
+/* ── Example buttons ───────────────────────────────────────────────────────── */
+
+#reader-examples {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: var(--gap);
+}
+
+.example-btn {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  color: var(--color-text);
+  cursor: pointer;
+  font-size: 0.875rem;
+  padding: 0.375rem 0.75rem;
+  white-space: nowrap;
+}
+
+.example-btn:hover,
+.example-btn:focus-visible {
+  border-color: var(--color-primary);
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* ── Form ──────────────────────────────────────────────────────────────────── */
+
+#reader-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+  margin-bottom: 1.5rem;
+}
+
+#reader-input {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  color: var(--color-text);
+  font-family: inherit;
+  font-size: 1rem;
+  min-height: 120px;
+  padding: 0.75rem;
+  resize: vertical;
+  width: 100%;
+}
+
+#reader-input:focus {
+  border-color: var(--color-primary);
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+#reader-submit {
+  align-self: flex-start;
+  background: var(--color-primary);
+  border: none;
+  border-radius: var(--radius);
+  color: var(--color-primary-text);
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.6rem 1.5rem;
+}
+
+#reader-submit:hover:not(:disabled),
+#reader-submit:focus-visible:not(:disabled) {
+  filter: brightness(1.1);
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+#reader-submit:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* ── Loading status ────────────────────────────────────────────────────────── */
+
+#reader-status {
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+  font-style: italic;
+  margin-top: -0.5rem;
+}
+
+#reader-status[hidden] {
+  display: none;
+}
+
+/* ── Output container ──────────────────────────────────────────────────────── */
+
+#reader-output[hidden] {
+  display: none;
+}
+
+#reader-output {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+}
+
+/* ── Safety banner ─────────────────────────────────────────────────────────── */
+
+.safety-banner {
+  background: var(--color-safety-bg);
+  border: 1.5px solid var(--color-safety-border);
+  border-radius: var(--radius);
+  color: var(--color-safety-text);
+  font-weight: 600;
+  padding: 0.75rem 1rem;
+}
+
+/* ── Reading sections ──────────────────────────────────────────────────────── */
+
+.reading-section {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 0.75rem 1rem;
+}
+
+.reading-label {
+  color: var(--color-text-muted);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.375rem;
+  text-transform: uppercase;
+}
+
+.reading-section p {
+  line-height: 1.6;
+}
+
+/* ── Quote ─────────────────────────────────────────────────────────────────── */
+
+.reading-quote blockquote {
+  border-left: 3px solid var(--color-border);
+  color: var(--color-text);
+  font-style: italic;
+  margin: 0 0 0.5rem 0;
+  padding-left: 0.75rem;
+}
+
+/* ── Badges ────────────────────────────────────────────────────────────────── */
+
+.badge {
+  border-radius: 4px;
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.2rem 0.5rem;
+}
+
+.badge-verified {
+  background: transparent;
+  color: var(--color-verified);
+}
+
+.badge-unverified {
+  background: transparent;
+  color: var(--color-unverified);
+}
+
+/* ── Next message + Copy button ────────────────────────────────────────────── */
+
+.reading-next-message p {
+  margin-bottom: 0.5rem;
+}
+
+.copy-btn {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  color: var(--color-text);
+  cursor: pointer;
+  font-size: 0.875rem;
+  padding: 0.3rem 0.75rem;
+}
+
+.copy-btn:hover,
+.copy-btn:focus-visible {
+  border-color: var(--color-primary);
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* ── Error message ─────────────────────────────────────────────────────────── */
+
+.reading-error {
+  border: 1px solid var(--color-error);
+  border-radius: var(--radius);
+  color: var(--color-error);
+  padding: 0.75rem 1rem;
+}
+
+/* ── Responsive adjustments ────────────────────────────────────────────────── */
+
+@media (max-width: 360px) {
+  body {
+    padding: 0.75rem;
+    font-size: 0.95rem;
+  }
+
+  .reader-header h1 {
+    font-size: 1.2rem;
+  }
+
+  #reader-submit {
+    width: 100%;
+    text-align: center;
+  }
+}
