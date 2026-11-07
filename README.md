@@ -4,6 +4,12 @@ A reading layer for agents. Before an agent answers a person, BEZEN reads what t
 
 This repository is the skeleton: one small core, and two apps built on it.
 
+- **Live:** https://bezen-skeleton.netlify.app ([Reply Reader](https://bezen-skeleton.netlify.app/reply-reader/) · [Kid Message](https://bezen-skeleton.netlify.app/kid-message/))
+- **Demo video:** https://youtu.be/MO1Yzj8PDc4
+- **How Kiro built it:** [KIRO.md](KIRO.md)
+
+Built with [Kiro](https://kiro.dev) for Kiroween 2026, Skeleton Crew category.
+
 ---
 
 ## What is a "reading"?

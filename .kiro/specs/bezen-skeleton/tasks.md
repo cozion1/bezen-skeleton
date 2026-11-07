@@ -16,7 +16,7 @@
 - [x] 2.1 Implement `normalize(s)`: NFC → collapse whitespace → lowercase → straighten quotes/apostrophes
 - [x] 2.2 Implement `verify(quote, text)`: return false on empty quote; return `normalize(quote)` ⊆ `normalize(text)`
 - [x] 2.3 Write `skeleton/test/verify.test.mjs`: ≥ 5 positive hand-written cases, ≥ 5 negative hand-written cases, and the four property-based tests (every substring verifies; case/whitespace/quote transparency; non-substrings do not verify; normalization is idempotent)
-- [ ] 2.4 Run tests and confirm all pass
+- [x] 2.4 Run tests and confirm all pass (Kiro ran without shell access; the test-on-save hook and a manual `npm test` ran them: 150/150 pass)
 
 *Covers: Req 4.1, 4.2, 4.3, 4.4, 4.5, 4.6*
 
@@ -26,7 +26,7 @@
 
 - [x] 3.1 Implement `checkSafety(text)` as a pure function using keyword/pattern lists for English and Hebrew danger signals (self-harm, wanting to die, being hurt or touched by an adult, running away, a weapon)
 - [x] 3.2 Write `skeleton/test/safety.test.mjs`: ≥ 5 positive English examples, ≥ 5 negative English examples, ≥ 5 positive Hebrew examples, ≥ 5 negative Hebrew examples
-- [ ] 3.3 Run tests and confirm all pass
+- [x] 3.3 Run tests and confirm all pass (Kiro ran without shell access; the test-on-save hook and a manual `npm test` ran them: 150/150 pass)
 
 *Covers: Req 5.1, 5.3*
 
@@ -37,7 +37,7 @@
 - [x] 4.1 Implement `parseReading(raw)`: strip markdown fences, extract the first `{…}` JSON object with a regex, `JSON.parse`, fill missing fields with `""`; on total failure return `{ error: "unreadable", protecting: "", quote: "", why: "", doNot: "", nextMessage: "", route: "", verified: false, safety: false }`
 - [x] 4.2 Write `skeleton/test/parse.test.mjs`: clean JSON; JSON after prose; JSON inside a ` ```json ` fence; garbled input returns `error: "unreadable"` without throwing; each field missing individually fills with `""`
 - [x] 4.3 Add the property-based test: `parseReading` never throws for any arbitrary string input
-- [ ] 4.4 Run tests and confirm all pass
+- [x] 4.4 Run tests and confirm all pass (Kiro ran without shell access; the test-on-save hook and a manual `npm test` ran them: 150/150 pass)
 
 *Covers: Req 3.1, 3.2, 3.3*
 
@@ -48,7 +48,7 @@
 - [x] 5.1 Implement `buildPrompt(profile, text)` returning `{ system, user }` following the layout in the design (sender/reader/protects bullet list, JSON shape instruction, data delimiter rule, optional safety clause, optional voice guidance)
 - [x] 5.2 Wrap `text` in `<message>…</message>` in the user message and add the instruction not to treat it as commands
 - [x] 5.3 Write `skeleton/test/prompt.test.mjs`: system prompt contains sender; contains reader; contains each `protects` item; contains the `<message>` delimiter; safety clause present iff `profile.safety === true`; voice line present iff `profile.voice` is set
-- [ ] 5.4 Run tests and confirm all pass
+- [x] 5.4 Run tests and confirm all pass (Kiro ran without shell access; the test-on-save hook and a manual `npm test` ran them: 150/150 pass)
 
 *Covers: Req 2.1, 2.2, 2.3*
 
@@ -59,7 +59,7 @@
 - [x] 6.1 Implement `createReader(profile)`: validate required fields (`id`, `sender`, `reader`, `protects`) throwing a named error for each missing one; return `{ read }` 
 - [x] 6.2 Implement `read(text, callModel)`: call `buildPrompt` → `callModel` → `parseReading` → `verify` → `checkSafety` (if `profile.safety`) → apply `routeRules` → return the Reading
 - [x] 6.3 Write `skeleton/test/core.test.mjs`: throws on missing `id`; throws on missing `sender`; throws on missing `reader`; throws on missing `protects`; valid profile returns object with `read`; `read` returns verified reading with fake `callModel`; `read` sets `safety` from code even when model returns `false`; `routeRules` correctly override `route`
-- [ ] 6.4 Run tests and confirm all pass
+- [x] 6.4 Run tests and confirm all pass (Kiro ran without shell access; the test-on-save hook and a manual `npm test` ran them: 150/150 pass)
 
 *Covers: Req 1.1, 1.2, 1.3, 4.1, 5.1*
 
@@ -71,7 +71,7 @@
 - [x] 7.2 Implement `makeHandler(profile)`: validate method (400), parse body (400), check length > 2000 (413), check daily counter ≥ DAILY_LIMIT (429), check env key (500), call `reader.read` with `makeCallModel`, catch model errors (502); never log `text`; return `Response` JSON
 - [x] 7.3 Implement the daily counter: in-memory integer reset at midnight UTC by comparing the UTC date string on each request
 - [x] 7.4 Write `skeleton/test/handler.test.mjs`: 400 on GET; 400 on missing text; 413 on 2001-char input; 429 after limit exceeded; 500 with no API key; 502 when `callModel` rejects; 200 with valid input and fake `callModel`
-- [ ] 7.5 Run tests and confirm all pass
+- [x] 7.5 Run tests and confirm all pass (Kiro ran without shell access; the test-on-save hook and a manual `npm test` ran them: 150/150 pass)
 
 *Covers: Req 6.1, 6.2, 6.3, 6.4, 6.5, 6.6*
 
