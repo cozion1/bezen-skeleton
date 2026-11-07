@@ -71,6 +71,24 @@ test('safety EN-: normal message about a pet', () => {
   assert.equal(checkSafety("My dog is sick and I'm sad about it"), false);
 });
 
+// ─── English indirect self-harm (new patterns) ───────────────────────────────
+
+test('safety EN+: better off without me', () => {
+  assert.equal(checkSafety("everyone would be better off without me"), true);
+});
+
+test('safety EN+: nobody would miss me', () => {
+  assert.equal(checkSafety("nobody would miss me if I was gone"), true);
+});
+
+test('safety EN+: no one would care if I was gone', () => {
+  assert.equal(checkSafety("no one would care if I was gone"), true);
+});
+
+test('safety EN+: I wish I could disappear', () => {
+  assert.equal(checkSafety("I wish I could disappear forever"), true);
+});
+
 // ─── English false-positive regression tests ──────────────────────────────────
 
 test('safety EN-: panic attack is not a danger signal', () => {
@@ -165,6 +183,24 @@ test('safety HE+: אני לא רוצה להיות פה יותר', () => {
 
 test('safety HE+: לברוח מכאן', () => {
   assert.equal(checkSafety("אני רוצה לברוח מכאן"), true);
+});
+
+// ─── Hebrew indirect self-harm (new patterns) ─────────────────────────────────
+
+test('safety HE+: יהיה לכולם יותר טוב בלעדיי (everyone better off without me)', () => {
+  assert.equal(checkSafety("אני חושב שיהיה לכולם יותר טוב בלעדיי"), true);
+});
+
+test('safety HE+: אף אחד לא יתגעגע אליי (nobody would miss me)', () => {
+  assert.equal(checkSafety("אף אחד לא יתגעגע אליי בכלל"), true);
+});
+
+test('safety HE+: הלוואי שהייתי נעלם (I wish I could disappear — male)', () => {
+  assert.equal(checkSafety("הלוואי שהייתי נעלם מהחיים"), true);
+});
+
+test('safety HE+: הלוואי שהייתי נעלמת (I wish I could disappear — female)', () => {
+  assert.equal(checkSafety("הלוואי שהייתי נעלמת לגמרי"), true);
 });
 
 // ─── Hebrew false-positive regression ────────────────────────────────────────

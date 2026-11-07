@@ -31,6 +31,12 @@ const ENGLISH_PATTERNS = [
   /\bnot\s+want\s+to\s+(be\s+here|live)\b/i,
   /\bdon't\s+want\s+to\s+live\b/i,
 
+  // indirect suicidal ideation — "everyone would be better off without me" type
+  /\bbetter\s+off\s+without\s+me\b/i,
+  /\bnobody\s+would\s+miss\s+me\b/i,
+  /\bno\s+one\s+would\s+(care|miss)\s+if\s+i\s+(was|were)\s+gone\b/i,
+  /\bi\s+wish\s+i\s+could\s+disappear\b/i,
+
   // being hurt or touched by an adult
   /\b(adult|grown[\s-]?up|man|woman|uncle|aunt|teacher|coach)\s+(hurt|touch(ed)?|hit|hurt)\s+(me|my)\b/i,
   /\b(someone|somebody|they|he|she)\s+(hurt|touch(ed)?|hit|hurt)\s+(me|my\s+body)\b/i,
@@ -68,6 +74,12 @@ const HEBREW_PATTERNS = [
   /להרוג את עצמ/,         // kill myself
   /להתאבד/,               // to commit suicide
   /אין לי סיבה לחיות/,    // no reason to live
+
+  // indirect suicidal ideation
+  /יהיה לכולם יותר טוב בלעדיי/,  // everyone would be better off without me
+  /אף אחד לא יתגעגע אליי/,        // nobody would miss me
+  /הלוואי שהייתי נעלם/,           // I wish I could disappear (male)
+  /הלוואי שהייתי נעלמת/,          // I wish I could disappear (female)
 
   // being hurt or touched
   /פגע בי/,               // hurt me

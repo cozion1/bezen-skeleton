@@ -1,0 +1,24 @@
+# netlify.toml
+# Publish directory: repo root (static pages live here and in app sub-folders)
+# Functions directory: netlify/functions/
+# Bundler: esbuild (supports ES modules natively)
+# Redirects map /api/* to the two Netlify Functions
+
+[build]
+  publish   = "."
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
+
+# Redirect /api/read-reply → /.netlify/functions/read-reply
+[[redirects]]
+  from   = "/api/read-reply"
+  to     = "/.netlify/functions/read-reply"
+  status = 200
+
+# Redirect /api/read-kid → /.netlify/functions/read-kid
+[[redirects]]
+  from   = "/api/read-kid"
+  to     = "/.netlify/functions/read-kid"
+  status = 200

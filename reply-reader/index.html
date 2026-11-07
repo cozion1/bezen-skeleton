@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reply Reader — BEZEN</title>
+  <meta name="description" content="Paste a customer reply. Find out what they are protecting before you answer." />
+  <link rel="stylesheet" href="../skeleton/ui/reader.css" />
+  <style>
+    /* ── Kiroween: bone white on deep charcoal, amber accent ── */
+    :root {
+      --color-bg:           #1c1a17;
+      --color-surface:      #252320;
+      --color-border:       #3d3a34;
+      --color-text:         #f0ead8;
+      --color-text-muted:   #9e9580;
+      --color-primary:      #d97706;      /* amber */
+      --color-primary-text: #1c1a17;
+      --color-safety-bg:    #3b1f00;
+      --color-safety-text:  #fbbf24;
+      --color-safety-border:#92400e;
+      --color-verified:     #6ee7b7;
+      --color-unverified:   #f97316;
+      --color-error:        #f97316;
+    }
+
+    /* Light mode: still bone-toned but readable */
+    @media (prefers-color-scheme: light) {
+      :root {
+        --color-bg:           #faf7f0;
+        --color-surface:      #f0ead8;
+        --color-border:       #d6ccb4;
+        --color-text:         #1c1a17;
+        --color-text-muted:   #5c5445;
+        --color-primary:      #b45309;
+        --color-primary-text: #ffffff;
+        --color-safety-bg:    #fef3c7;
+        --color-safety-text:  #7c2d12;
+        --color-safety-border:#d97706;
+        --color-verified:     #065f46;
+        --color-unverified:   #c2410c;
+        --color-error:        #c2410c;
+      }
+    }
+
+    /* Amber accent on links */
+    a { color: var(--color-primary); }
+
+    .back-link {
+      display: inline-block;
+      font-size: 0.875rem;
+      margin-bottom: 1.25rem;
+      text-decoration: none;
+      color: var(--color-text-muted);
+    }
+    .back-link:hover { color: var(--color-primary); }
+  </style>
+</head>
+<body>
+  <a href="../index.html" class="back-link">← BEZEN</a>
+
+  <header class="reader-header">
+    <h1>Reply Reader</h1>
+    <p>Paste a customer reply. See what they are protecting before you answer.</p>
+  </header>
+
+  <div id="reader-examples" role="group" aria-label="Example replies"></div>
+
+  <form id="reader-form" novalidate>
+    <label for="reader-input" class="sr-only">Customer reply</label>
+    <textarea
+      id="reader-input"
+      name="text"
+      placeholder="Paste the customer's reply here…"
+      rows="6"
+      maxlength="2000"
+      dir="auto"
+      aria-label="Customer reply"
+      required
+    ></textarea>
+    <button id="reader-submit" type="submit">Read</button>
+  </form>
+
+  <p id="reader-status" role="status" aria-live="polite" hidden></p>
+
+  <div id="reader-output" hidden aria-live="polite"></div>
+
+  <script type="module">
+    import { initReader } from '../skeleton/ui/reader.js';
+    import examples from './examples.mjs';
+
+    initReader({
+      endpoint: '/api/read-reply',
+      examples,
+      showRoute: true,
+    });
+  </script>
+</body>
+</html>

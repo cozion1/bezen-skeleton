@@ -250,6 +250,31 @@ body {
   color: var(--color-unverified);
 }
 
+/* ── Route badge ───────────────────────────────────────────────────────────── */
+
+.badge-route {
+  border-radius: 4px;
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.25rem 0.6rem;
+  margin-bottom: 0.25rem;
+}
+
+/* "Hand this to a person" — uses safety colors (amber/orange, stands out) */
+.badge-route-human {
+  background: var(--color-safety-bg);
+  border: 1px solid var(--color-safety-border);
+  color: var(--color-safety-text);
+}
+
+/* "An agent may answer this" — uses the verified green (calm, ok to proceed) */
+.badge-route-bot {
+  background: transparent;
+  border: 1px solid var(--color-verified);
+  color: var(--color-verified);
+}
+
 /* ── Next message + Copy button ────────────────────────────────────────────── */
 
 .reading-next-message p {

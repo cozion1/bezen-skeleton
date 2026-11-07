@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kid Message — BEZEN</title>
+  <meta name="description" content="Paste a child's message. Understand what they are guarding, and how to open the conversation without closing it." />
+  <link rel="stylesheet" href="../skeleton/ui/reader.css" />
+  <style>
+    /* ── Kiroween: bone white on deep charcoal, soft teal accent ── */
+    :root {
+      --color-bg:           #151a1a;
+      --color-surface:      #1d2424;
+      --color-border:       #2e3d3d;
+      --color-text:         #e8f0f0;
+      --color-text-muted:   #7a9e9e;
+      --color-primary:      #2dd4bf;      /* soft teal */
+      --color-primary-text: #0f1f1f;
+      --color-safety-bg:    #1a0a0a;
+      --color-safety-text:  #fca5a5;
+      --color-safety-border:#7f1d1d;
+      --color-verified:     #6ee7b7;
+      --color-unverified:   #fb923c;
+      --color-error:        #fb923c;
+    }
+
+    /* Light mode: off-white with teal accent */
+    @media (prefers-color-scheme: light) {
+      :root {
+        --color-bg:           #f0fafa;
+        --color-surface:      #e0f2f1;
+        --color-border:       #b2dfdb;
+        --color-text:         #0d1f1f;
+        --color-text-muted:   #3d6666;
+        --color-primary:      #0f9090;
+        --color-primary-text: #ffffff;
+        --color-safety-bg:    #fff1f2;
+        --color-safety-text:  #9b1c1c;
+        --color-safety-border:#fca5a5;
+        --color-verified:     #065f46;
+        --color-unverified:   #c2410c;
+        --color-error:        #c2410c;
+      }
+    }
+
+    a { color: var(--color-primary); }
+
+    .back-link {
+      display: inline-block;
+      font-size: 0.875rem;
+      margin-bottom: 1.25rem;
+      text-decoration: none;
+      color: var(--color-text-muted);
+    }
+    .back-link:hover { color: var(--color-primary); }
+  </style>
+</head>
+<body>
+  <a href="../index.html" class="back-link">← BEZEN</a>
+
+  <header class="reader-header">
+    <h1>Kid Message</h1>
+    <p>Paste a child's message. See what they are guarding and how to open the conversation without closing it.</p>
+  </header>
+
+  <div id="reader-examples" role="group" aria-label="Example messages"></div>
+
+  <form id="reader-form" novalidate>
+    <label for="reader-input" class="sr-only">Child's message</label>
+    <textarea
+      id="reader-input"
+      name="text"
+      placeholder="Paste the child's message here…"
+      rows="6"
+      maxlength="2000"
+      dir="auto"
+      aria-label="Child's message"
+      required
+    ></textarea>
+    <button id="reader-submit" type="submit">Read</button>
+  </form>
+
+  <p id="reader-status" role="status" aria-live="polite" hidden></p>
+
+  <div id="reader-output" hidden aria-live="polite"></div>
+
+  <script type="module">
+    import { initReader } from '../skeleton/ui/reader.js';
+    import examples from './examples.mjs';
+
+    initReader({
+      endpoint: '/api/read-kid',
+      examples,
+    });
+  </script>
+</body>
+</html>

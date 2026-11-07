@@ -77,6 +77,30 @@ async function read(profile, text, callModel) {
 }
 
 /**
+ * Return true when keyword kw appears in text as a whole word (case-insensitive).
+ *
+ * A "word boundary" is defined as: start/end of string, or a character that is
+ * not a Unicode letter or digit (\\P{L} and \\P{N}).  This works for English,
+ * Hebrew, and any other script supported by Unicode property escapes.
+ *
+ * Keywords that contain spaces are matched as full phrases; the spaces count as
+ * non-word characters so they don't need special treatment.
+ *
+ * @param {string} kw
+ * @param {string} text
+ * @returns {boolean}
+ */
+function keywordMatches(kw, text) {
+  // Escape any regex special characters in the keyword
+  const escaped = kw.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  // Non-word boundary: a position preceded/followed by a non-letter-non-digit char
+  // (?<![\\p{L}\\p{N}]) — lookbehind: not a letter/digit  (or start of string)
+  // (?![\\p{L}\\p{N}])  — lookahead:  not a letter/digit  (or end of string)
+  const re = new RegExp(`(?<![\\p{L}\\p{N}])${escaped}(?![\\p{L}\\p{N}])`, 'iu');
+  return re.test(text);
+}
+
+/**
  * Evaluate routeRules in order; first keyword match escalates to human.
  * Keyword rules may only escalate to human — they never downgrade a route.
  * Final route is 'human' if any rule matched OR the model already returned 'human'.
@@ -102,15 +126,13 @@ function applyRouteRules(profile, reading, text) {
     return modelRoute;
   }
 
-  const haystack = text.toLowerCase();
-
   for (const rule of profile.routeRules) {
     const { signals } = rule;
 
     if (signals instanceof RegExp) {
       if (signals.test(text)) return 'human';
     } else if (Array.isArray(signals)) {
-      const matched = signals.some((kw) => haystack.includes(kw.toLowerCase()));
+      const matched = signals.some((kw) => keywordMatches(kw, text));
       if (matched) return 'human';
     }
   }

@@ -79,9 +79,9 @@
 
 ## 8. `reply-reader/` — App 1 profile and examples
 
-- [ ] 8.1 Write `reply-reader/profile.mjs` with all required `protects` items (time, budget approval, standing with boss, privacy, bad past experience, pride in what they built, being rushed) and `routeRules` for privacy/career risk/anger/complaint → `"human"`
-- [ ] 8.2 Write `reply-reader/examples.mjs` exporting an array of 3 example reply objects (each with a `label` and `text`)
-- [ ] 8.3 Create `netlify/functions/read-reply.mjs` importing the profile and calling `makeHandler(profile)`
+- [x] 8.1 Write `reply-reader/profile.mjs` with all required `protects` items (time, budget approval, standing with boss, privacy, bad past experience, pride in what they built, being rushed) and `routeRules` for privacy/career risk/anger/complaint → `"human"`
+- [x] 8.2 Write `reply-reader/examples.mjs` exporting an array of 3 example reply objects (each with a `label` and `text`)
+- [x] 8.3 Create `netlify/functions/read-reply.mjs` importing the profile and calling `makeHandler(profile)`
 
 *Covers: Req 7.1, 7.2, 7.3, 1.4*
 
@@ -89,9 +89,9 @@
 
 ## 9. `kid-message/` — App 2 profile and examples
 
-- [ ] 9.1 Write `kid-message/profile.mjs` with all required `protects` items, `safety: true`, and `voice` guidance (short sentences an adult can say; no lectures; no "why did you…" questions)
-- [ ] 9.2 Write `kid-message/examples.mjs` exporting an array of 3 example message objects, with one example in Hebrew
-- [ ] 9.3 Create `netlify/functions/read-kid.mjs` importing the profile and calling `makeHandler(profile)`
+- [x] 9.1 Write `kid-message/profile.mjs` with all required `protects` items, `safety: true`, and `voice` guidance (short sentences an adult can say; no lectures; no "why did you…" questions)
+- [x] 9.2 Write `kid-message/examples.mjs` exporting an array of 3 example message objects, with one example in Hebrew
+- [x] 9.3 Create `netlify/functions/read-kid.mjs` importing the profile and calling `makeHandler(profile)`
 
 *Covers: Req 8.1, 8.2, 8.3, 8.4, 1.4*
 
@@ -111,10 +111,10 @@
 
 ## 11. App pages — `reply-reader/index.html` and `kid-message/index.html`
 
-- [ ] 11.1 Write `reply-reader/index.html`: `<script>` loading `reader.js`, calling `initReader` with the reply-reader endpoint and examples; no other logic
-- [ ] 11.2 Write `kid-message/index.html`: same pattern with the kid-message endpoint and examples
-- [ ] 11.3 Verify both pages render correctly at 360px (browser devtools) and that dark mode applies
-- [ ] 11.4 Verify the Hebrew example renders right-to-left
+- [x] 11.1 Write `reply-reader/index.html`: `<script>` loading `reader.js`, calling `initReader` with the reply-reader endpoint and examples; no other logic
+- [x] 11.2 Write `kid-message/index.html`: same pattern with the kid-message endpoint and examples
+- [x] 11.3 Verify both pages render correctly at 360px (browser devtools) and that dark mode applies
+- [x] 11.4 Verify the Hebrew example renders right-to-left
 
 *Covers: Req 7.3, 8.4, 9.1, 9.2*
 
@@ -122,7 +122,7 @@
 
 ## 12. Landing page and README
 
-- [ ] 12.1 Write root `index.html`: three sentences explaining the skeleton (BEZEN reads what a person is protecting; the code — not the model — checks every quote; one core, any number of apps), links to both apps
-- [ ] 12.2 Write `README.md`: what the project is, how to run locally (`netlify dev`), how to set `ANTHROPIC_API_KEY`, how to add a third app (new folder + one function file), and a link to the spec
+- [x] 12.1 Write root `index.html`: three sentences explaining the skeleton (BEZEN reads what a person is protecting; the code — not the model — checks every quote; one core, any number of apps), links to both apps
+- [x] 12.2 Write `README.md`: what the project is, how to run locally (`netlify dev`), how to set `ANTHROPIC_API_KEY`, how to add a third app (new folder + one function file), and a link to the spec
 
 *Covers: Req 9.3, 1.4*

@@ -26,6 +26,10 @@ export function buildPrompt(profile, text) {
     ? `Voice for nextMessage: ${profile.voice}\n\n`
     : '';
 
+  const routeGuidanceClause = profile.routeGuidance
+    ? `Route guidance: ${profile.routeGuidance}\n\n`
+    : `Route guidance: use human only when a person must answer, otherwise bot-ok.\n\n`;
+
   const system =
 `You are a reading layer. Your only job is to read what a person is protecting \
 behind their words and return a single JSON object — nothing else.
@@ -36,7 +40,7 @@ READER: ${profile.reader}
 What the sender may be protecting (one or more may apply):
 ${protectsBullets}
 
-${safetyClause}${voiceClause}Return exactly this JSON shape and nothing else:
+${safetyClause}${voiceClause}${routeGuidanceClause}Return exactly this JSON shape and nothing else:
 {
   "protecting": "<what they seem to be protecting>",
   "quote": "<shortest exact span from the text — copy character for character>",

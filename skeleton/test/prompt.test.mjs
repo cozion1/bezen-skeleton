@@ -123,3 +123,61 @@ test('prompt: system instructs output fields to match language of sender text', 
     'language rule does not exempt quote from translation'
   );
 });
+
+
+// ─── routeGuidance ────────────────────────────────────────────────────────────
+
+test('prompt: routeGuidance clause present when profile.routeGuidance is set', () => {
+  const guidance = 'human when the reply touches legal words; bot-ok for everything else.';
+  const profile = { ...BASE_PROFILE, routeGuidance: guidance };
+  const { system } = buildPrompt(profile, 'Hello');
+  assert.ok(
+    system.includes(guidance),
+    `routeGuidance text not found in system prompt: ${system}`
+  );
+});
+
+test('prompt: routeGuidance clause uses profile text verbatim, not default', () => {
+  const guidance = 'human for angry messages; bot-ok otherwise.';
+  const profile = { ...BASE_PROFILE, routeGuidance: guidance };
+  const { system } = buildPrompt(profile, 'Hello');
+  // Custom text present
+  assert.ok(system.includes(guidance), 'custom routeGuidance not found');
+  // Default text absent
+  assert.ok(
+    !system.includes('use human only when a person must answer'),
+    'default routeGuidance text should be absent when custom one is set'
+  );
+});
+
+test('prompt: default routeGuidance present when profile.routeGuidance is absent', () => {
+  const { system } = buildPrompt(BASE_PROFILE, 'Hello');
+  assert.ok(
+    system.includes('use human only when a person must answer'),
+    'default routeGuidance not found when field is absent'
+  );
+});
+
+test('prompt: default routeGuidance present when profile.routeGuidance is empty string', () => {
+  const profile = { ...BASE_PROFILE, routeGuidance: '' };
+  const { system } = buildPrompt(profile, 'Hello');
+  assert.ok(
+    system.includes('use human only when a person must answer'),
+    'default routeGuidance not found when field is empty string'
+  );
+});
+
+test('prompt: routeGuidance appears near the route field in the JSON shape section', () => {
+  const guidance = 'human for complaints; bot-ok for the rest.';
+  const profile = { ...BASE_PROFILE, routeGuidance: guidance };
+  const { system } = buildPrompt(profile, 'Hello');
+  const guidancePos = system.indexOf(guidance);
+  const routePos = system.indexOf('"route"');
+  assert.ok(guidancePos !== -1, 'routeGuidance text not found');
+  assert.ok(routePos !== -1, '"route" field not found');
+  // routeGuidance should appear before the route field in the JSON shape
+  assert.ok(
+    guidancePos < routePos,
+    'routeGuidance should appear before the JSON shape instructions'
+  );
+});

@@ -1,28 +1,30 @@
 /**
  * skeleton/ui/reader.js — shared front-end module
  *
- * Exports: initReader({ endpoint, examples })
+ * Exports: initReader({ endpoint, examples, showRoute })
  *
  * Covers: Req 9.1, 9.2, 4.3, 5.2
  *
  * Rendering order:
  *   1. Safety banner (if reading.safety === true)
- *   2. What they are protecting
- *   3. The quote with ✓ verified or ⚠ unverified badge
- *   4. What not to do
- *   5. Next message with Copy button
+ *   2. Route badge (if showRoute === true)
+ *   3. What they are protecting
+ *   4. The quote with ✓ verified or ⚠ unverified badge
+ *   5. What not to do
+ *   6. Next message with Copy button
  */
 
 /**
  * @typedef {Object} InitOptions
  * @property {string}   endpoint  - URL of the Netlify Function to POST to
  * @property {Array<{label: string, text: string}>} examples - Example buttons
+ * @property {boolean}  [showRoute=false] - When true, render a route badge in the output
  */
 
 /**
  * @param {InitOptions} options
  */
-export function initReader({ endpoint, examples = [] }) {
+export function initReader({ endpoint, examples = [], showRoute = false }) {
   // ── DOM wiring ──────────────────────────────────────────────────────────────
   const form      = document.getElementById('reader-form');
   const textarea  = document.getElementById('reader-input');
@@ -75,7 +77,7 @@ export function initReader({ endpoint, examples = [] }) {
         return;
       }
 
-      renderReading(data, output);
+      renderReading(data, output, { showRoute });
     } catch (err) {
       showError('Could not reach the reading service. Please try again.');
     } finally {
@@ -116,8 +118,10 @@ export function initReader({ endpoint, examples = [] }) {
  *
  * @param {object} reading
  * @param {HTMLElement} container
+ * @param {object} [opts]
+ * @param {boolean} [opts.showRoute=false] - Render a route badge when true
  */
-export function renderReading(reading, container) {
+export function renderReading(reading, container, { showRoute = false } = {}) {
   container.innerHTML = '';
 
   // 1. Safety banner
@@ -129,6 +133,19 @@ export function renderReading(reading, container) {
     banner.textContent =
       'Talk with this child now. If there is any risk to their safety, contact a professional or emergency services immediately.';
     container.appendChild(banner);
+  }
+
+  // 2. Route badge
+  if (showRoute && reading.route) {
+    const badge = document.createElement('div');
+    if (reading.route === 'human') {
+      badge.className = 'badge-route badge-route-human';
+      badge.textContent = 'Hand this to a person';
+    } else {
+      badge.className = 'badge-route badge-route-bot';
+      badge.textContent = 'An agent may answer this';
+    }
+    container.appendChild(badge);
   }
 
   // 2. What they are protecting
