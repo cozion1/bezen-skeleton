@@ -45,11 +45,13 @@ The seatbelt: the code checks that the quote really appears in the original text
    # DAILY_LIMIT=60   (optional, default 60)
    ```
 
-3. Start the local dev server (requires the [Netlify CLI](https://docs.netlify.com/cli/get-started/)):
+3. Start the local dev server. No Netlify CLI needed — `scripts/dev.mjs` serves the pages and runs the same function modules Netlify runs in production:
 
    ```sh
-   netlify dev
+   node --env-file=.env scripts/dev.mjs
    ```
+
+   (`netlify dev` also works if you have the [Netlify CLI](https://docs.netlify.com/cli/get-started/).)
 
    The landing page will be at `http://localhost:8888`.  
    The two apps: `http://localhost:8888/reply-reader/` and `http://localhost:8888/kid-message/`.
