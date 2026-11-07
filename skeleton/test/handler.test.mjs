@@ -141,7 +141,7 @@ test('handler: 413 on 2001-character input', async () => {
 test('handler: 200 on exactly 2000-character input (boundary)', async () => {
   process.env.ANTHROPIC_API_KEY = 'test-key';
   const handler = makeHandler(makeProfile());
-  stubFetch({ content: [{ text: VALID_JSON }] });
+  stubFetch({ content: [{ type: 'text', text: VALID_JSON }] });
   const req = makeRequest({ text: 'x'.repeat(2000) });
   const res = await handler(req);
   // Should not be 413
@@ -156,7 +156,7 @@ test('handler: 429 after daily limit exceeded', async () => {
   process.env.DAILY_LIMIT = '1';
   // Create a fresh handler with DAILY_LIMIT=1
   const handler = makeHandler(makeProfile());
-  stubFetch({ content: [{ text: VALID_JSON }] });
+  stubFetch({ content: [{ type: 'text', text: VALID_JSON }] });
 
   // First request — should succeed (increments counter to 1)
   const req1 = makeRequest({ text: VALID_TEXT });
@@ -230,7 +230,7 @@ test('handler: 200 with valid input and fake callModel', async () => {
   process.env.ANTHROPIC_API_KEY = 'test-key';
   const handler = makeHandler(makeProfile());
 
-  stubFetch({ content: [{ text: VALID_JSON }] });
+  stubFetch({ content: [{ type: 'text', text: VALID_JSON }] });
 
   const req = makeRequest({ text: VALID_TEXT });
   const res = await handler(req);
@@ -240,6 +240,28 @@ test('handler: 200 with valid input and fake callModel', async () => {
   assert.equal(body.protecting, 'their time');
   assert.equal(typeof body.verified, 'boolean');
   assert.equal(typeof body.safety, 'boolean');
+
+  delete process.env.ANTHROPIC_API_KEY;
+});
+
+// ─── 200: thinking block before the text block ────────────────────────────────
+// Newer models may return a thinking block first; content[0] is then not text.
+
+test('handler: reads the text block even when a thinking block comes first', async () => {
+  process.env.ANTHROPIC_API_KEY = 'test-key';
+  const handler = makeHandler(makeProfile());
+
+  stubFetch({
+    content: [
+      { type: 'thinking', thinking: 'reading the reply…' },
+      { type: 'text', text: VALID_JSON },
+    ],
+  });
+
+  const res = await handler(makeRequest({ text: VALID_TEXT }));
+  assert.equal(res.status, 200);
+  const body = await res.json();
+  assert.equal(body.protecting, 'their time');
 
   delete process.env.ANTHROPIC_API_KEY;
 });

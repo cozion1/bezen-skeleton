@@ -84,7 +84,7 @@ export function makeCallModel(apiKey, timeoutMs = DEFAULT_TIMEOUT_MS) {
         },
         body: JSON.stringify({
           model: MODEL_ID,
-          max_tokens: 1024,
+          max_tokens: 2500,
           system,
           messages: [{ role: 'user', content: user }],
         }),
@@ -101,9 +101,12 @@ export function makeCallModel(apiKey, timeoutMs = DEFAULT_TIMEOUT_MS) {
     }
 
     const data = await res.json();
-    // Extract text from the first content block
-    const text = data?.content?.[0]?.text;
-    if (typeof text !== 'string') {
+    // Join every text block. Newer models may put a thinking block first,
+    // so content[0] is not always the text.
+    const text = Array.isArray(data?.content)
+      ? data.content.filter((b) => b?.type === 'text').map((b) => b.text).join('')
+      : undefined;
+    if (typeof text !== 'string' || text === '') {
       throw new Error('Unexpected response shape from Anthropic API');
     }
     return text;
